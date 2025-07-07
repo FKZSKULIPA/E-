@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETS科技软件下载站</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00ffe7;
+            --secondary: #1a1a2e;
+            --accent: #ff00c8;
+            --glass-bg: rgba(30, 30, 46, 0.7);
+            --glass-blur: blur(14px);
+            --gold: #ffd700;
+            --nav-height: 72px;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', 'Arial', sans-serif;
+            background: #181828;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        /* 动态粒子背景 */
+        #particles-js {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            top: 0;
+            left: 0;
+        }
+        /* 顶部导航栏 */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: var(--nav-height);
+            background: rgba(20, 20, 40, 0.65);
+            backdrop-filter: blur(16px);
+            z-index: 20;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 32px 0 rgba(0,255,231,0.12);
+            border-bottom: 2px solid;
+            border-image: linear-gradient(90deg, var(--primary), var(--accent), var(--primary)) 1;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0 24px;
+        }
+        nav li {
+            margin: 0 32px;
+        }
+        nav a {
+            display: block;
+            padding: 18px 0;
+            color: var(--primary);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.18em;
+            text-decoration: none;
+            letter-spacing: 1.5px;
+            transition: color 0.2s;
+            position: relative;
+        }
+        nav a::after {
+            content: '';
+            display: block;
+            margin: 0 auto;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transition: width 0.3s;
+            border-radius: 2px;
+        }
+        nav a:hover {
+            color: var(--accent);
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .spacer { height: var(--nav-height); }
+        /* 首页 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            padding: 56px 36px 36px 36px;
+            border-radius: 32px;
+            background: var(--glass-bg);
+            box-shadow: 0 12px 48px 0 rgba(0,0,0,0.55);
+            backdrop-filter: var(--glass-blur);
+            border: 2.5px solid;
+            border-image: linear-gradient(120deg, var(--primary), var(--accent), var(--primary)) 1;
+            text-align: center;
+            margin-top: 80px;
+            animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.32,1) 0.2s both;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(60px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 18px #00ffe7, 0 0 2px #fff;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGlow 2.5s infinite alternate;
+        }
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 18px #00ffe7, 0 0 2px #fff;}
+            to { text-shadow: 0 0 32px #ff00c8, 0 0 8px #fff;}
+        }
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #fff;
+            margin-bottom: 18px;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGlow 2.5s infinite alternate;
+        }
+        .hero .typed {
+            font-size: 1.18rem;
+            color: #b0b0b0;
+            margin-bottom: 36px;
+            min-height: 2.2em;
+            letter-spacing: 1px;
+            font-family: 'Roboto', monospace;
+        }
+        .download-section {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-bottom: 14px;
+        }
+        .download-btn {
+            display: inline-block;
+            padding: 16px 44px;
+            background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+            color: #181818;
+            font-weight: bold;
+            font-size: 1.18em;
+            border: none;
+            border-radius: 50px;
+            box-shadow: 0 4px 32px 0 rgba(0,255,231,0.22);
+            text-decoration: none;
+            transition: transform 0.18s, box-shadow 0.18s, background 0.18s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background-size: 200% 200%;
+            animation: btnFlow 2.5s linear infinite;
+        }
+        @keyframes btnFlow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .download-btn:hover {
+            transform: scale(1.09) translateY(-2px);
+            box-shadow: 0 8px 40px 0 rgba(255,0,200,0.22);
+            background: linear-gradient(90deg, var(--accent), var(--primary), var(--accent));
+            background-size: 200% 200%;
+        }
+        .download-tip {
+            margin-top: 16px;
+            color: var(--gold);
+            font-size: 1.13em;
+            letter-spacing: 1px;
+            text-shadow: 0 0 6px #000;
+            animation: fadeInUp 1.2s cubic-bezier(.23,1.02,.32,1) 1.2s both;
+        }
+        .divider {
+            margin: 48px auto 40px auto;
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            opacity: 0.8;
+            box-shadow: 0 0 16px var(--primary), 0 0 8px var(--accent);
+        }
+        .features {
+            background: transparent;
+            padding: 40px 0 60px 0;
+            text-align: center;
+        }
+        .feature-grid {
+            display: flex;
+            justify-content: center;
+            gap: 36px;
+            flex-wrap: wrap;
+        }
+        .feature {
+            background: var(--glass-bg);
+            border-radius: 22px;
+            padding: 36px 28px;
+            min-width: 240px;
+            max-width: 320px;
+            margin: 18px 0;
+            box-shadow: 0 2px 24px 0 rgba(0,255,231,0.12);
+            border: 1.8px solid rgba(255,0,200,0.13);
+            transition: transform 0.18s, box-shadow 0.18s;
+            opacity: 0;
+            transform: translateY(60px);
+        }
+        .feature.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.7s cubic-bezier(.23,1.02,.32,1), transform 0.7s cubic-bezier(.23,1.02,.32,1);
+        }
+        .feature h3 {
+            color: var(--primary);
+            margin-bottom: 14px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.32em;
+            letter-spacing: 1px;
+        }
+        .feature p {
+            color: #b0b0b0;
+            font-size: 1.08em;
+        }
+        @media (max-width: 900px) {
+            .feature-grid {flex-direction: column; gap: 22px;}
+            .hero-content {padding: 24px 8px;}
+            .download-section {flex-direction: column; gap: 18px;}
+            nav ul {flex-direction: column;}
+            nav li {margin: 0 0 8px 0;}
+        }
+        /* 高级自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(120deg, #00ffe7 10%, #ff00c8 90%);
+            border-radius: 8px;
+            box-shadow: 0 0 8px #00ffe7, 0 0 2px #ff00c8;
+            border: 2px solid #181828;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(120deg, #ff00c8 10%, #00ffe7 90%);
+            box-shadow: 0 0 12px #ff00c8, 0 0 4px #00ffe7;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(30,30,46,0.2);
+            border-radius: 8px;
+        }
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #00ffe7 #181828;
+        }
+    </style>
+</head>
+<body>
+    <!-- 动态粒子背景 -->
+    <div id="particles-js"></div>
+    <!-- 导航栏 -->
+    <nav>
+        <ul>
+            <li><a href="#home">首页</a></li>
+            <li><a href="#download">软件下载</a></li>
+            <li><a href="#features">软件特色</a></li>
+            <li><a href="#reviews">网友评价</a></li>
+            <li><a href="#about">关于我们</a></li>
+            <li><a href="#disclaimer">免责声明</a></li>
+        </ul>
+    </nav>
+    <div class="spacer" id="home"></div>
+    <section class="hero">
+        <div class="hero-content" id="download">
+            <div class="logo">ETS科技</div>
+            <h1>ETS科技软件3.0</h1>
+            <div class="typed" id="typed"></div>
+            <div class="download-section">
+                <a href="#" class="download-btn" id="android-download">安卓版下载</a>
+                <a href="https://fkzskulipa.lanzouu.com/iXRHY30ge9cf" class="download-btn" target="_blank">Windows版下载</a>
+            </div>
+            <div class="download-tip">
+                Windows下载提取码：<b>ets</b>
+            </div>
+        </div>
+    </section>
+    <div class="divider" id="features"></div>
+    <section class="features">
+        <div class="feature-grid">
+            <div class="feature">
+                <h3>智能辅助</h3>
+                <p>AI智能分析，自动适配多场景，助力学习与管理，效率倍增。</p>
+            </div>
+            <div class="feature">
+                <h3>安全稳定</h3>
+                <p>多重加密与沙箱隔离，数据安全无忧，系统稳定流畅。</p>
+            </div>
+            <div class="feature">
+                <h3>极致美学</h3>
+                <p>极简与未来感并存，界面炫酷，操作丝滑，体验极致。</p>
+            </div>
+            <div class="feature">
+                <h3>智能标题</h3>
+                <p>基于AI语义理解，自动生成高契合度标题，让内容表达更精准、更具科技感。</p>
+            </div>
+        </div>
+    </section>
+    <!-- 网友评价区块开始 -->
+    <div class="divider" id="reviews"></div>
+    <section class="features">
+        <h2 style="font-family:'Orbitron',sans-serif;font-size:2rem;color:var(--primary);margin-bottom:32px;letter-spacing:2px;text-shadow:0 0 8px #00ffe7;">网友评价</h2>
+        <div class="feature-grid">
+            <div class="feature">
+                <h3 style="color:var(--accent);font-size:1.1em;">@未来学霸</h3>
+                <p>“ETS科技软件的智能辅助功能太强大了，学习效率提升了不止一个档次！”</p>
+            </div>
+            <div class="feature">
+                <h3 style="color:var(--accent);font-size:1.1em;">@极客玩家</h3>
+                <p>“界面设计极致美学，操作流畅丝滑，科技感爆棚，体验非常棒！”</p>
+            </div>
+            <div class="feature">
+                <h3 style="color:var(--accent);font-size:1.1em;">@AI达人</h3>
+                <p>“智能标题功能太智能了，每次生成的标题都很贴合内容，省心又高效！”</p>
+            </div>
+            <div class="feature">
+                <h3 style="color:var(--accent);font-size:1.1em;">@教育专家</h3>
+                <p>“ETS科技真正做到了安全与创新并重，是数字化学习的首选利器！”</p>
+            </div>
+        </div>
+    </section>
+    <!-- 网友评价区块结束 -->
+    <div class="divider" id="about"></div>
+    <section class="features">
+        <div class="feature-grid" style="justify-content: center;">
+            <div class="feature" style="max-width: 600px;">
+                <h3>关于ETS科技</h3>
+                <p>ETS科技致力于为中学师生提供高效、智能、安全的数字化软件工具。我们专注于教育科技领域，持续创新，助力教育信息化发展。</p>
+            </div>
+        </div>
+    </section>
+    <script>
+        // 安卓下载按钮提示
+        document.getElementById('android-download').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('安卓版本暂未上线，敬请期待！');
+        });
+
+        // 打字机特效
+        const typedText = [
+            "创新科技，智能体验，安全高效。",
+            "为中学师生提供专业的数字化工具。",
+            "极致美学，极致性能，极致体验。"
+        ];
+        let typedIndex = 0, charIndex = 0, isDeleting = false;
+        const typedElem = document.getElementById('typed');
+        function typeWriter() {
+            let current = typedText[typedIndex];
+            if (isDeleting) {
+                charIndex--;
+                typedElem.innerHTML = current.substring(0, charIndex);
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    typedIndex = (typedIndex + 1) % typedText.length;
+                    setTimeout(typeWriter, 600);
+                } else {
+                    setTimeout(typeWriter, 30);
+                }
+            } else {
+                charIndex++;
+                typedElem.innerHTML = current.substring(0, charIndex) + '<span style="border-right:2px solid #00ffe7"></span>';
+                if (charIndex === current.length) {
+                    isDeleting = true;
+                    setTimeout(typeWriter, 1200);
+                } else {
+                    setTimeout(typeWriter, 60);
+                }
+            }
+        }
+        typeWriter();
+
+        // 滚动动画
+        function revealOnScroll() {
+            const features = document.querySelectorAll('.feature');
+            const windowHeight = window.innerHeight;
+            features.forEach(f => {
+                const top = f.getBoundingClientRect().top;
+                if (top < windowHeight - 60) {
+                    f.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+    </script>
+    <!-- 粒子背景JS（cdn） -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": {"value": 80,"density": {"enable": true,"value_area": 900}},
+        "color": {"value": ["#00ffe7", "#ff00c8", "#fff"]},
+        "shape": {"type": "circle"},
+        "opacity": {"value": 0.45,"random": true},
+        "size": {"value": 3.5,"random": true},
+        "line_linked": {"enable": true,"distance": 120,"color": "#fff","opacity": 0.18,"width": 1.2},
+        "move": {"enable": true,"speed": 1.6,"direction": "none","random": false,"straight": false,"out_mode": "out"}
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {"enable": true,"mode": "repulse"},
+          "onclick": {"enable": true,"mode": "push"},
+          "resize": true
+        },
+        "modes": {
+          "repulse": {"distance": 90,"duration": 0.4},
+          "push": {"particles_nb": 4}
+        }
+      },
+      "retina_detect": true
+    });
+    </script>
+    <!-- 免责声明区块开始 -->
+    <footer id="disclaimer" style="width:100%;margin-top:40px;padding:32px 0 18px 0;text-align:center;background:rgba(20,20,40,0.65);backdrop-filter:blur(8px);font-size:1.05em;color:#aaa;letter-spacing:1px;box-shadow:0 -2px 24px 0 rgba(0,255,231,0.08);border-top:1.5px solid #222;">
+        <span style="color:#ff00c8;font-weight:bold;">免责声明：</span>
+        如果导致听说成绩下降，本软件不负任何责任，本软件创始人拥有最终解释权。
+    </footer>
+    <!-- 免责声明区块结束 -->
+</body>
+</html>
